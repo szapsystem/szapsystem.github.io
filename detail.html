@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>详情 · 艾文普科技</title>
+    <style>
+        /* 沿用之前的全局样式，并补充一些详情页专用样式 */
+        * { margin:0; padding:0; box-sizing:border-box; font-family:system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
+        body { background:#f9fafc; color:#1e293b; line-height:1.5; display:flex; flex-direction:column; min-height:100vh; }
+        .navbar { background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.02); padding:.9rem 2rem; position:sticky; top:0; z-index:10; border-bottom:1px solid #eef2f6; }
+        .nav-container { max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+        .logo { font-size:1.7rem; font-weight:600; letter-spacing:-0.02em; background:linear-gradient(145deg,#1e3c5c,#2b5b8b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .nav-links { display:flex; gap:2.2rem; }
+        .nav-links a { text-decoration:none; color:#334155; font-weight:500; transition:0.2s; font-size:1.05rem; }
+        .nav-links a:hover { color:#1e4a6f; }
+        .nav-links a.active { color:#1f4e7a; border-bottom:2px solid #2b5b8b; padding-bottom:4px; }
+        .main-content { flex:1; max-width:1280px; width:100%; margin:2.5rem auto; padding:0 2rem; }
+        .footer { background:#fff; border-top:1px solid #e9eef3; padding:1.8rem 2rem; text-align:center; color:#5f6c80; font-size:.95rem; margin-top:2rem; }
+        .btn { display:inline-block; background:#f1f5f9; padding:.5rem 1.3rem; border-radius:2rem; font-size:.9rem; font-weight:500; color:#1e3a5f; border:1px solid transparent; transition:0.15s; text-decoration:none; }
+        .btn-primary { background:#1f4e7a; color:#fff; }
+        .btn-primary:hover { background:#123b5b; }
+
+        /* 详情页专用 */
+        .detail-container {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            border: 1px solid #eef2f6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .detail-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .detail-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #172c3c;
+        }
+        .detail-image {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 2rem;
+            margin: 1.5rem 0;
+            background: #e2e8f0;
+        }
+        .detail-description {
+            font-size: 1.2rem;
+            color: #334155;
+            margin: 1.5rem 0;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+        .back-link {
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <span class="logo">艾文普科技</span>
+            <div class="nav-links">
+                <a href="index.html">主页</a>
+                <a href="products.html">产品</a>
+                <a href="cases.html">案例</a>
+                <a href="contact.html">联系</a>
+                <a href="admin.html">管理</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <a href="javascript:history.back()" class="btn back-link">← 返回</a>
+        <div id="detail-container" class="detail-container">
+            <!-- 动态加载详情 -->
+            <p style="text-align:center; padding:3rem;">加载中...</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025艾文普科技 · 深圳市龙岗区 | 商务 steven.yang@avantport.com
+    </div>
+
+    <script>
+        (function() {
+            // 获取 URL 参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');      // 'product' 或 'case'
+            const id = urlParams.get('id');          // 数字ID
+
+            const container = document.getElementById('detail-container');
+
+            if (!type || !id) {
+                container.innerHTML = '<p style="color:#b91c1c; text-align:center;">参数错误，无法显示详情。</p>';
+                return;
+            }
+
+            // 根据类型读取对应数据
+            const storageKey = type === 'product' ? 'products' : (type === 'case' ? 'cases' : null);
+            if (!storageKey) {
+                container.innerHTML = '<p style="color:#b91c1c; text-align:center;">未知的类型。</p>';
+                return;
+            }
+
+            const items = JSON.parse(localStorage.getItem(storageKey)) || [];
+            const item = items.find(i => i.id == id);  // 注意 == 因为可能是字符串数字
+
+            if (!item) {
+                container.innerHTML = '<p style="color:#b91c1c; text-align:center;">内容不存在，可能已被删除。</p>';
+                return;
+            }
+
+            // 构建详情 HTML
+            let html = `
+                <div class="detail-header">
+                    <h1 class="detail-title">${item.title}</h1>
+                    <span style="background:#e9eff7; padding:0.3rem 1.2rem; border-radius:40px; color:#1f4e7a; font-weight:500;">${type === 'product' ? '产品' : '案例'}</span>
+                </div>
+                <img src="${item.imageUrl}" alt="${item.title}" class="detail-image" onerror="this.src='https://picsum.photos/800/450?random=999'">
+                <div class="detail-description">${item.description.replace(/\n/g, '<br>')}</div>
+                <hr style="border: none; border-top: 1px solid #e2eaf2; margin: 2rem 0 1rem;">
+                <p style="color:#6b7b8f;">如有兴趣，欢迎通过 <a href="contact.html">联系页面</a> 与我们取得沟通。</p>
+            `;
+            container.innerHTML = html;
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- ********************************* -->
+<!-- 文件3: cases.html (案例页) -->
+<!-- ********************************* -->
+<!DOCTYPE html>
+<html lang="en">
+<head>... (类似结构，高亮案例)</head>
+<body>
+    <div class="navbar">...</div>
+    <div class="main-content"><h1>客户案例</h1><div id="cases-list" class="card-grid"></div></div>
+    <script> // 读取cases并展示，初始化逻辑同产品
+        !function(){
+            if(!localStorage.getItem('cases')){ localStorage.setItem('cases', JSON.stringify([...])) }
+            const cases = JSON.parse(localStorage.getItem('cases')) || [];
+            document.getElementById('cases-list').innerHTML = cases.map(c=>`...`).join('');
+        }()
+    </script>
+</body>
+</html>

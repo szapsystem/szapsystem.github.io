@@ -1,0 +1,58 @@
+<!-- ********************************* -->
+<!-- 文件2: products.html (产品页) -->
+<!-- ********************************* -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品中心 · 艾文普科技</title>
+    <style> /* 复制index完整style，确保一致 */ </style>
+</head>
+<body>
+    <div class="navbar"> <!-- 同上导航，高亮产品 -->
+        <div class="nav-container">
+            <span class="logo">艾文普科技</span>
+            <div class="nav-links">
+                <a href="index.html">主页</a>
+                <a href="products.html" class="active">产品</a>
+                <a href="cases.html">案例</a>
+                <a href="contact.html">联系</a>
+                <a href="admin.html">管理</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <h1 class="section-title" style="border-left:none; padding-left:0;">全部产品</h1>
+        <div id="products-list" class="card-grid"></div>
+    </div>
+    <div class="footer">© 2025 艾文普科技</div>
+    <script>
+        (function(){
+            function renderProducts() {
+                const products = JSON.parse(localStorage.getItem('products')) || [];
+                const container = document.getElementById('products-list');
+                if (!container) return;
+                if (products.length===0) { container.innerHTML='<p style="grid-column:1/-1; color:#666;">暂无产品，请到管理后台添加。</p>'; return; }
+                container.innerHTML = products.map(p => `
+                    <div class="card">
+                        <img src="${p.imageUrl}" alt="${p.title}" class="card-img" onerror="this.src='https://picsum.photos/300/200?random=101'">
+                        <div class="card-body">
+                            <h3 class="card-title">${p.title}</h3>
+                            <p class="card-text">${p.description}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            if (!localStorage.getItem('products')) { // 初始化默认
+                localStorage.setItem('products', JSON.stringify([
+                    { id: 101, title: '智联平台', description: '企业级物联网中台，高效连接设备与业务。', imageUrl: 'https://picsum.photos/id/20/400/250' },
+                    { id: 102, title: '明析BI', description: '轻量级数据分析仪表盘，决策一目了然。', imageUrl: 'https://picsum.photos/id/21/400/250' },
+                    { id: 103, title: '极光CMS', description: '可 Headless 的内容管理，适配多端。', imageUrl: 'https://picsum.photos/id/26/400/250' }
+                ]));
+            }
+            renderProducts();
+        })();
+    </script>
+</body>
+</html>

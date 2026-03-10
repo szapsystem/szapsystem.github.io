@@ -1,0 +1,109 @@
+<!-- ********************************* -->
+<!-- 文件1: index.html (主页) -->
+<!-- ********************************* -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>艾文普科技 · 驱动未来</title>
+    <style>
+        /* 全局样式 (同上) 为简洁此处省略，实际使用时复制上面所有style */
+        * { margin:0; padding:0; box-sizing:border-box; font-family:system-ui, ... } 
+        .navbar { ... } .nav-container { ... } .logo { ... } .nav-links { ... } .main-content { ... } .footer { ... } .card-grid { ... } .card { ... } .hero { ... } .section-title { ... } 
+        /* 为保证展示，务必包含所有已定义的样式类。因篇幅，此处简写，但用户复制时需包含完整style。下面提供完整精简版样式。 */
+    </style>
+    <style>
+        /* 完整样式 (将之前style全部复制于此) */
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',sans-serif}body{background:#f9fafc;color:#1e293b;line-height:1.5;display:flex;flex-direction:column;min-height:100vh}.navbar{background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.02);padding:.9rem 2rem;position:sticky;top:0;z-index:10;border-bottom:1px solid #eef2f6}.nav-container{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap}.logo{font-size:1.7rem;font-weight:600;letter-spacing:-0.02em;background:linear-gradient(145deg,#1e3c5c,#2b5b8b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.nav-links{display:flex;gap:2.2rem}.nav-links a{text-decoration:none;color:#334155;font-weight:500;transition:0.2s;font-size:1.05rem}.nav-links a:hover{color:#1e4a6f}.nav-links a.active{color:#1f4e7a;border-bottom:2px solid #2b5b8b;padding-bottom:4px}.main-content{flex:1;max-width:1280px;width:100%;margin:2.5rem auto;padding:0 2rem}.footer{background:#fff;border-top:1px solid #e9eef3;padding:1.8rem 2rem;text-align:center;color:#5f6c80;font-size:.95rem;margin-top:2rem}.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;margin-top:2rem}.card{background:#fff;border-radius:1.5rem;overflow:hidden;box-shadow:0 10px 25px -8px rgba(0,0,0,0.06);transition:0.25s ease;border:1px solid #f0f3f7}.card:hover{transform:translateY(-6px);box-shadow:0 25px 30px -12px rgba(30,60,90,0.15)}.card-img{width:100%;height:200px;object-fit:cover;background:#e2e8f0}.card-body{padding:1.5rem}.card-title{font-size:1.4rem;font-weight:600;margin-bottom:.6rem;color:#0f2b3f}.card-text{color:#475569;margin-bottom:.8rem}.btn{display:inline-block;background:#f1f5f9;padding:.5rem 1.3rem;border-radius:2rem;font-size:.9rem;font-weight:500;color:#1e3a5f;border:1px solid transparent;transition:0.15s;text-decoration:none}.btn-primary{background:#1f4e7a;color:#fff}.btn-primary:hover{background:#123b5b}.section-title{font-size:2rem;font-weight:600;letter-spacing:-0.01em;margin:2.5rem 0 1.5rem;color:#1a2e44;border-left:6px solid #2b5b8b;padding-left:1.5rem}.hero{background:linear-gradient(165deg,#f6f9fd,#fff);border-radius:2.5rem;padding:3rem 2.5rem;margin-bottom:2rem;border:1px solid #eef4f9}.hero h1{font-size:2.6rem;font-weight:600;color:#172c3c;max-width:700px}.hero p{font-size:1.2rem;color:#4a5b6e;margin:1rem 0 1.8rem}
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <span class="logo">艾文普科技</span>
+            <div class="nav-links">
+                <a href="index.html" class="active">主页</a>
+                <a href="products.html">产品</a>
+                <a href="cases.html">案例</a>
+                <a href="contact.html">联系</a>
+                <a href="admin.html" style="background:#f0f5fb;padding:0.3rem 1rem;border-radius:30px;">管理</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="hero">
+            <h1>简洁 · 可靠 · 有温度</h1>
+            <p>我们为企业提供数字化解决方案，让技术回归清爽。</p>
+            <a href="products.html" class="btn btn-primary">查看产品</a>
+        </div>
+
+        <h2 class="section-title">主营产品</h2>
+        <div id="home-products" class="card-grid"><!-- JS动态加载 --></div>
+
+        <h2 class="section-title">近期案例</h2>
+        <div id="home-cases" class="card-grid"><!-- JS动态加载 --></div>
+    </div>
+
+    <div class="footer">
+        © 2025 艾文普科技 · 深圳市龙岗区 | 商务 steven.yang@avantport.com
+    </div>
+
+    <script>
+        (function() {
+            // 初始化localStorage数据 (若无)
+            function initData() {
+                if (!localStorage.getItem('products')) {
+                    const defaultProducts = [
+                        { id: 101, title: '智联平台', description: '企业级物联网中台，高效连接设备与业务。', imageUrl: 'https://picsum.photos/id/20/400/250' },
+                        { id: 102, title: '明析BI', description: '轻量级数据分析仪表盘，决策一目了然。', imageUrl: 'https://picsum.photos/id/21/400/250' },
+                        { id: 103, title: '极光CMS', description: '可 Headless 的内容管理，适配多端。', imageUrl: 'https://picsum.photos/id/26/400/250' }
+                    ];
+                    localStorage.setItem('products', JSON.stringify(defaultProducts));
+                }
+                if (!localStorage.getItem('cases')) {
+                    const defaultCases = [
+                        { id: 201, title: '某制造集团', description: '设备预测性维护系统，降低停机时间35%', imageUrl: 'https://picsum.photos/id/15/400/250' },
+                        { id: 202, title: '云创教育', description: '线上教学平台，支撑10万+学生同时学习。', imageUrl: 'https://picsum.photos/id/16/400/250' },
+                        { id: 203, title: '智慧园区', description: '能耗可视化与门禁一体化管理', imageUrl: 'https://picsum.photos/id/17/400/250' }
+                    ];
+                    localStorage.setItem('cases', JSON.stringify(defaultCases));
+                }
+            }
+            initData();
+
+            // 读取并渲染产品 (取前3个)
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const homeProducts = document.getElementById('home-products');
+            if (homeProducts) {
+                homeProducts.innerHTML = products.slice(0,3).map(p => `
+                    <div class="card">
+                        <img src="${p.imageUrl}" alt="${p.title}" class="card-img" onerror="this.src='https://picsum.photos/300/200?random=1'">
+                        <div class="card-body">
+                            <h3 class="card-title">${p.title}</h3>
+                            <p class="card-text">${p.description}</p>
+                            <a href="products.html" class="btn">查看详情 →</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const cases = JSON.parse(localStorage.getItem('cases')) || [];
+            const homeCases = document.getElementById('home-cases');
+            if (homeCases) {
+                homeCases.innerHTML = cases.slice(0,3).map(c => `
+                    <div class="card">
+                        <img src="${c.imageUrl}" alt="${c.title}" class="card-img" onerror="this.src='https://picsum.photos/300/200?random=2'">
+                        <div class="card-body">
+                            <h3 class="card-title">${c.title}</h3>
+                            <p class="card-text">${c.description}</p>
+                            <a href="cases.html" class="btn">浏览案例 →</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        })();
+    </script>
+</body>
+</html>
