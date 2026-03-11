@@ -1,58 +1,39 @@
-<!-- ********************************* -->
-<!-- 文件2: products.html (产品页) -->
-<!-- ********************************* -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>产品中心 · 艾文普科技</title>
-    <style> /* 复制index完整style，确保一致 */ </style>
+<meta charset="UTF-8">
+<title>产品</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;padding:20px}
+.nav{background:#f5f5f5;padding:15px;margin-bottom:20px}
+.nav a{margin:0 12px;text-decoration:none;color:#333}
+.nav a:hover{color:#007bff}
+</style>
 </head>
 <body>
-    <div class="navbar"> <!-- 同上导航，高亮产品 -->
-        <div class="nav-container">
-            <span class="logo">艾文普科技</span>
-            <div class="nav-links">
-                <a href="index.html">主页</a>
-                <a href="products.html" class="active">产品</a>
-                <a href="cases.html">案例</a>
-                <a href="contact.html">联系</a>
-                <a href="admin.html">管理</a>
-            </div>
-        </div>
-    </div>
-    <div class="main-content">
-        <h1 class="section-title" style="border-left:none; padding-left:0;">全部产品</h1>
-        <div id="products-list" class="card-grid"></div>
-    </div>
-    <div class="footer">© 2025 艾文普科技</div>
-    <script>
-        (function(){
-            function renderProducts() {
-                const products = JSON.parse(localStorage.getItem('products')) || [];
-                const container = document.getElementById('products-list');
-                if (!container) return;
-                if (products.length===0) { container.innerHTML='<p style="grid-column:1/-1; color:#666;">暂无产品，请到管理后台添加。</p>'; return; }
-                container.innerHTML = products.map(p => `
-                    <div class="card">
-                        <img src="${p.imageUrl}" alt="${p.title}" class="card-img" onerror="this.src='https://picsum.photos/300/200?random=101'">
-                        <div class="card-body">
-                            <h3 class="card-title">${p.title}</h3>
-                            <p class="card-text">${p.description}</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            if (!localStorage.getItem('products')) { // 初始化默认
-                localStorage.setItem('products', JSON.stringify([
-                    { id: 101, title: '智联平台', description: '企业级物联网中台，高效连接设备与业务。', imageUrl: 'https://picsum.photos/id/20/400/250' },
-                    { id: 102, title: '明析BI', description: '轻量级数据分析仪表盘，决策一目了然。', imageUrl: 'https://picsum.photos/id/21/400/250' },
-                    { id: 103, title: '极光CMS', description: '可 Headless 的内容管理，适配多端。', imageUrl: 'https://picsum.photos/id/26/400/250' }
-                ]));
-            }
-            renderProducts();
-        })();
-    </script>
+
+<div class="nav">
+    <a href="index.html">首页</a>
+    <a href="product.html">产品</a>
+    <a href="case.html">案例</a>
+    <a href="about.html">关于我们</a>
+    <a href="manage.html">管理后台</a>
+</div>
+
+<h1>产品中心</h1>
+<div id="productBox">
+    <h2 id="title">产品名称加载中...</h2>
+    <img id="img" style="max-width:300px">
+    <p id="info"></p>
+</div>
+
+<script>
+// 这里未来对接后台，现在先显示默认内容
+document.getElementById("title").innerText = "智能巡检设备"
+document.getElementById("info").innerText = "这是产品介绍说明"
+document.getElementById("img").src = "https://via.placeholder.com/300"
+</script>
+
 </body>
 </html>

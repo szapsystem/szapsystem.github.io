@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>管理后台</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;padding:20px}
+.nav{background:#f5f5f5;padding:15px;margin-bottom:20px}
+.nav a{margin:0 12px;text-decoration:none;color:#333}
+.nav a:hover{color:#007bff}
+
+.login{max-width:400px;margin:50px auto;padding:25px;border:1px solid #ddd;border-radius:10px}
+input,button{width:100%;padding:10px;margin:8px 0}
+button{background:#007bff;color:white;border:none;border-radius:5px}
+.adminPanel{display:none}
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html">首页</a>
+    <a href="product.html">产品</a>
+    <a href="case.html">案例</a>
+    <a href="about.html">关于我们</a>
+    <a href="manage.html">管理后台</a>
+</div>
+
+<div class="login" id="loginBox">
+    <h3>管理员登录</h3>
+    <input id="username" placeholder="用户名">
+    <input id="password" type="password" placeholder="密码">
+    <button onclick="login()">登录</button>
+</div>
+
+<div class="adminPanel" id="adminPanel">
+    <h2>产品信息管理</h2>
+    产品标题：<input id="pTitle" style="width:100%"><br><br>
+    产品介绍：<input id="pInfo" style="width:100%"><br><br>
+    产品图片：<input id="pImg" style="width:100%"><br><br>
+    <button onclick="saveProduct()">保存产品信息</button>
+    <button onclick="logout()">退出登录</button>
+</div>
+
+<script>
+// 管理员账号密码
+const USER = "admin"
+const PASS = "admin888"
+
+function login(){
+    let u = document.getElementById("username").value
+    let p = document.getElementById("password").value
+    if(u === USER && p === PASS){
+        localStorage.setItem("loginToken","OK")
+        document.getElementById("loginBox").style.display="none"
+        document.getElementById("adminPanel").style.display="block"
+        loadProduct()
+    }else{
+        alert("账号或密码错误")
+    }
+}
+
+function loadProduct(){
+    let t = localStorage.getItem("pTitle") || "智能巡检设备"
+    let i = localStorage.getItem("pInfo") || "产品介绍"
+    let m = localStorage.getItem("pImg") || "https://via.placeholder.com/300"
+    document.getElementById("pTitle").value = t
+    document.getElementById("pInfo").value = i
+    document.getElementById("pImg").value = m
+}
+
+function saveProduct(){
+    localStorage.setItem("pTitle", document.getElementById("pTitle").value)
+    localStorage.setItem("pInfo", document.getElementById("pInfo").value)
+    localStorage.setItem("pImg", document.getElementById("pImg").value)
+    alert("保存成功！产品页已更新")
+}
+
+function logout(){
+    localStorage.removeItem("loginToken")
+    location.reload()
+}
+
+// 自动登录判断
+if(localStorage.getItem("loginToken") === "OK"){
+    document.getElementById("loginBox").style.display="none"
+    document.getElementById("adminPanel").style.display="block"
+    loadProduct()
+}
+</script>
+</body>
+</html>

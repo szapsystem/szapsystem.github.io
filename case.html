@@ -1,18 +1,28 @@
-<!-- ********************************* -->
-<!-- 文件3: cases.html (案例页) -->
-<!-- ********************************* -->
 <!DOCTYPE html>
-<html lang="en">
-<head>... (类似结构，高亮案例)</head>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>案例</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;padding:20px}
+.nav{background:#f5f5f5;padding:15px;margin-bottom:20px}
+.nav a{margin:0 12px;text-decoration:none;color:#333}
+.nav a:hover{color:#007bff}
+</style>
+</head>
 <body>
-    <div class="navbar">...</div>
-    <div class="main-content"><h1>客户案例</h1><div id="cases-list" class="card-grid"></div></div>
-    <script> // 读取cases并展示，初始化逻辑同产品
-        !function(){
-            if(!localStorage.getItem('cases')){ localStorage.setItem('cases', JSON.stringify([...])) }
-            const cases = JSON.parse(localStorage.getItem('cases')) || [];
-            document.getElementById('cases-list').innerHTML = cases.map(c=>`...`).join('');
-        }()
-    </script>
+
+<div class="nav">
+    <a href="index.html">首页</a>
+    <a href="product.html">产品</a>
+    <a href="case.html">案例</a>
+    <a href="about.html">关于我们</a>
+    <a href="manage.html">管理后台</a>
+</div>
+
+<h1>成功案例</h1>
+<p>这里展示项目案例内容。</p>
+
 </body>
 </html>
